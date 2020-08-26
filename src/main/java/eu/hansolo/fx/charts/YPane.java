@@ -92,6 +92,24 @@ public class YPane<T extends YItem> extends Region implements ChartArea {
     public YPane(final Paint BACKGROUND, final YSeries<T>... SERIES) {
         this(BACKGROUND, new ArrayList<>(), SERIES);
     }
+    
+    public YPane(int upperBoundY, final List<Category> CATEGORIES, final YSeries<T>... SERIES) {
+        getStylesheets().add(YPane.class.getResource("chart.css").toExternalForm());
+        aspectRatio        = PREFERRED_HEIGHT / PREFERRED_WIDTH;
+        keepAspect         = false;
+        _chartBackground   = Color.TRANSPARENT;
+        listOfSeries       = FXCollections.observableArrayList(SERIES);
+        _thresholdY        = 100;
+        _thresholdYVisible = false;
+        _thresholdYColor   = Color.RED;
+        _lowerBoundY       = 0;
+        _upperBoundY       = upperBoundY;
+        categories         = FXCollections.observableArrayList(CATEGORIES);
+        valid              = isChartTypeValid();
+        initGraphics();
+        registerListeners();
+    }
+    
     public YPane(final Paint BACKGROUND, final List<Category> CATEGORIES, final YSeries<T>... SERIES) {
         getStylesheets().add(YPane.class.getResource("chart.css").toExternalForm());
         aspectRatio        = PREFERRED_HEIGHT / PREFERRED_WIDTH;
